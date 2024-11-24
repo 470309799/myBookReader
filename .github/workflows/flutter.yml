@@ -16,25 +16,38 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # 设置 Flutter 环境，指定旧版本（例如：1.22.6）
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '1.22.6'
 
+      # 安装 Android SDK 和 NDK
       - name: Install Android SDK and NDK
         run: |
-          # 安装 Android SDK 和 NDK
+          # 安装必需的工具
+          sudo apt-get update
           sudo apt-get install -y wget unzip openjdk-8-jdk
-          # 设置 Android SDK 路径
-          echo "y" | sdkmanager --licenses
-          sdkmanager "platforms;android-28" "platforms;android-29" "build-tools;29.0.3" "ndk;21.4.7075529"
           
+          # 下载并解压 Android SDK
+          mkdir -p $HOME/android-sdk
+          cd $HOME/android-sdk
+          wget https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip
+          unzip commandlinetools-linux-7302050_latest.zip
+          
+          # 安装 SDK 组件
+          yes | $HOME/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=$HOME/android-sdk --licenses
+          yes | $HOME/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=$HOME/android-sdk "platforms;android-28" "platforms;android-29" "build-tools;29.0.3" "ndk;21.4.7075529"
+
+      # 安装 Flutter 项目依赖
       - name: Install dependencies
         run: flutter pub get
 
+      # 运行 Flutter 构建命令
       - name: Build APK
         run: flutter build apk --release
 
+      # 上传生成的 APK 作为构建工件
       - name: Upload APK artifact
         uses: actions/upload-artifact@v3
         with:
