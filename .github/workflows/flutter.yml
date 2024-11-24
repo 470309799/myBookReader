@@ -18,11 +18,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # 设置 Flutter 环境
+      # 设置 Flutter 环境，指定旧版本（例如：1.22.6）
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.7.0'  # 你可以选择你需要的版本
+          flutter-version: '1.22.6'  # 使用旧版 Flutter，防止使用 Android v2 embedding
 
       # 安装依赖
       - name: Install dependencies
