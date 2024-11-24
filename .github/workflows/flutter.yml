@@ -37,7 +37,7 @@ jobs:
           
           # 安装 SDK 组件
           yes | $HOME/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=$HOME/android-sdk --licenses
-          yes | $HOME/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=$HOME/android-sdk "platforms;android-28" "platforms;android-29" "build-tools;29.0.3" "ndk;21.4.7075529"
+          yes | $HOME/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=$HOME/android-sdk "platforms;android-28" "platforms;android-29" "build-tools;29.0.3" "ndk;22.1.7171670"
 
       # 安装 Flutter 项目依赖
       - name: Install dependencies
